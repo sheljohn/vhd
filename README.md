@@ -150,4 +150,4 @@ You can also get more information about mounting using `vhd-info`.
 ## License
 
 These tools are released under MIT license.
-The original author is Jonathan Hadida (github/sheljohn).
+The original author is Jonathan Hadida ([github/sheljohn](https://github.com/sheljohn)).
