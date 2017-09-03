@@ -91,7 +91,7 @@ vhd-format <filepath> <format>
     To see all available format, type 'mkfs.' in a terminal, and see all available completions (by pressing TAB twice).
 ```
 
-#### Mounting/unmounting formatted VHDs
+#### Mount or unmount a formatted VHD
 
 Formatted VHDs can be mounted/unmounted as normal filesystems.
 
@@ -110,7 +110,7 @@ vhd-mount  <filepath> <folder> <options...>
     All subsequent arguments as forwarded to the command 'mount'.
 ```
 
-#### Resizing formatted VHDs
+#### Resize a formatted VHDs
 
 Existing VHDs that have previously been formatted can be resized.
 Although some file-systems allow resizing without unmount, we avoid complications by requiring the VHD to be unmounted for resize.
@@ -125,6 +125,17 @@ vhd-resize <filepath> <size>
     New size in bytes, supporting human-readable formats (eg `10M` or `1.2G`).
 ```
 
+#### Information about a mounted VHD
+
+This command provides information about storage space, mounting options, and active processes using the attached device.
+
+```
+vhd-info <filepath>
+
+    <filepath>
+    Absolute or relative path to a VHD file mounted with 'vhd-mount'.
+```
+
 #### Determine which loop-device is attached
 
 Mounted VHDs are attached to a loop-device, which is mounted to a folder.
@@ -135,17 +146,6 @@ vhd-loopdev <filepath>
 which will return the device name (eg `/dev/loop1`), or nothing if the VHD is not attached.
 
 You can also get more information about mounting using `vhd-info`.
-
-#### Information about mounted VHD
-
-This command provides information about storage space, mounting options, and active processes using the attached device.
-
-```
-vhd-info <filepath>
-
-    <filepath>
-    Absolute or relative path to a VHD file mounted with 'vhd-mount'.
-```
 
 ## License
 
