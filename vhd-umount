@@ -1,0 +1,16 @@
+#!/bin/bash
+
+[ $# -lt 1 ] && { echo "Usage: $0 <file.vhd>"; exit 1; }
+if [ $EUID != 0 ]; then
+    echo "This script requires root privileges."
+    echo "Please enter your password: "
+    sudo "$0" "$@"
+    exit $?
+fi
+
+# unmount and detach loop-device
+LOOPDEV=$(vhd-loopdev "$1")
+if [ ! -z $LOOPDEV ]; then
+    umount $LOOPDEV
+    losetup -d $LOOPDEV
+fi

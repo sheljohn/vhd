@@ -1,0 +1,6 @@
+#!/bin/bash
+
+[ $# -lt 1 ] && { echo "Usage: $0 <file.vhd>"; exit 1; }
+
+INFO=$(losetup -j $1)
+echo ${INFO%%:*}

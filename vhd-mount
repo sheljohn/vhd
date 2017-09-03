@@ -1,0 +1,29 @@
+#!/bin/bash
+
+[ $# -lt 2 ] && { echo "Usage: $0 <file.vhd> <folder> <mount-args...>"; exit 1; }
+if [ $EUID != 0 ]; then
+    echo "This script requires root privileges."
+    echo "Please enter your password: "
+    sudo "$0" "$@"
+    exit $?
+fi
+
+# consume args
+FILE=$1
+FOLDER=$2
+shift 2
+
+# attach to loop device
+LOOPDEV=$(vhd-loopdev "$FILE")
+if [ -z $LOOPDEV ]; then
+    LOOPDEV=$(losetup -f)
+    losetup $LOOPDEV "$FILE"
+fi
+echo "VHD is attached to device: $LOOPDEV"
+
+# mount unless already mounted
+if [[ $(findmnt -M "$FOLDER") ]]; then 
+    echo "Folder is already mounted ($FOLDER)."
+else
+    mount "$@" $LOOPDEV "$FOLDER"
+fi

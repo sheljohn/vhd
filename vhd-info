@@ -1,0 +1,12 @@
+#!/bin/bash
+
+[ $# -lt 1 ] && { echo "Usage: $0 <file.vhd>"; exit 1; }
+
+# determine attached loop-device
+LOOPDEV=$(vhd-loopdev "$1")
+[[ $LOOPDEV ]] || { echo "VHD does not appear to be mounted ($1)."; exit 1; }
+
+# show info about the device (size, mount-options, active processes)
+df -h $LOOPDEV 
+findmnt -M $LOOPDEV
+fuse -mv $LOOPDEV
