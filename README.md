@@ -3,17 +3,36 @@
 
 This is a small library of simple tools for creating and working with virtual hard-drives in Linux.
 
-Virtual hard-drives (VHDs) are ordinary files that are formatted internally as a filesystem.
-They should be attached to a loop-device (`/dev/loopX`), and can then be mounted to a folder as a normal filesystem using `mount`.
-They can also be resized at will; some file-systems support resizing without unmounting, but to avoid any trouble, we require the VHD to be unmounted for resizing.
+Virtual hard-drives (VHDs) are ordinary files that are formatted internally as file-systems.
+They can be attached to a loop-device (`/dev/loopX`), mounted to a folder as a normal file-system using `mount`, and resized _a posteriori_.
 
 Mounting/unmounting operations require root privileges, so the following tools will prompt you for your password:
 ```
 vhd-format vhd-mount vhd-umount
 ```
-Note that this has nothing to do with the read/write permissions of the mounted filesystem; these permissions depends on the mount options, which themselves depend on the file-system type (eg EXT4 and NTFS have different options). You can read more about mount options [here](https://www.computerhope.com/unix/umount.htm).
+Note that this has nothing to do with the read/write permissions of the mounted filesystem; these permissions depends on the mount options, which themselves depend on the file-system type (eg EXT4 and NTFS have different options). You can read more about these options [here](https://www.computerhope.com/unix/umount.htm).
 
-Here is an example of how these tools can be used:
+## Installation
+
+There is no specific installation require, simply add the folder to your `PATH`, by adding the following line to your `.bash_profile`:
+```
+export PATH="/path/to/folder":$PATH
+```
+
+Note that this library depends on the following Linux tools
+```
+du df mkfs truncate losetup mount findmnt resize2fs fuse
+```
+which are part of the following Linux packages
+```
+coreutils util-linux e2fsprogs fuse
+```
+You should make sure these packages are installed on your system prior to using this library.
+
+
+## Documentation
+
+This is a short example of how these tools can be used:
 ```bash
 # create temporary folder
 mkdir -p /tmp/foo/test
@@ -128,20 +147,7 @@ vhd-info <filepath>
     Absolute or relative path to a VHD file mounted with 'vhd-mount'.
 ```
 
-## Dependencies
-
-This library depends on the following Linux tools
-```
-du df mkfs truncate losetup mount findmnt resize2fs fuse
-```
-which are part of the following Linux packages
-```
-coreutils util-linux e2fsprogs fuse
-```
-
-You should make sure these packages are installed on your system prior to using this library.
-
-# License
+## License
 
 These tools are released under MIT license.
 The original author is Jonathan Hadida (github/sheljohn).
