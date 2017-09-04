@@ -1,8 +1,0 @@
-#!/bin/bash
-
-[ $# -lt 2 ] && { echo "Usage: $0 <file.vhd> <size>"; exit 1; }
-[[ $(findmnt -M "$1") ]] && { echo "VHD is mounted, please unmount before resizing."; exit 1; }
-
-# resize and update fs
-truncate -s $2 "$1"
-resize2fs "$1"

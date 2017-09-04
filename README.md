@@ -21,11 +21,11 @@ export PATH="/path/to/folder":$PATH
 
 Note that this library depends on the following Linux tools
 ```
-du df mkfs truncate losetup mount findmnt resize2fs fuse
+du df mkfs truncate losetup mount findmnt resize2fs fuser
 ```
 which are part of the following Linux packages
 ```
-coreutils util-linux e2fsprogs fuse
+coreutils util-linux psmisc e2fsprogs
 ```
 You should make sure these packages are installed on your system prior to using this library.
 

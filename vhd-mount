@@ -2,8 +2,7 @@
 
 [ $# -lt 2 ] && { echo "Usage: $0 <file.vhd> <folder> <mount-args...>"; exit 1; }
 if [ $EUID != 0 ]; then
-    echo "This script requires root privileges."
-    echo "Please enter your password: "
+    echo "This script requires root privileges, you may be prompted for your password: "
     sudo "$0" "$@"
     exit $?
 fi
@@ -14,7 +13,7 @@ FOLDER=$2
 shift 2
 
 # attach to loop device
-LOOPDEV=$(vhd-loopdev "$FILE")
+LOOPDEV=$(losetup -j "$1" | awk -F: '{print $1}')
 if [ -z $LOOPDEV ]; then
     LOOPDEV=$(losetup -f)
     losetup $LOOPDEV "$FILE"
