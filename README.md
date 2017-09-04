@@ -4,7 +4,7 @@
 This is a small library of simple tools for creating and working with virtual hard-drives in Linux.
 
 Virtual hard-drives (VHDs) are ordinary files that are formatted internally as file-systems.
-They can be attached to a loop-device (`/dev/loopX`), mounted to a folder as a normal file-system using `mount`, and resized _a posteriori_.
+They can be attached to a loop-device (`/dev/loopX`), and mounted to a folder as a normal file-system using `mount`.
 
 Mounting/unmounting operations require root privileges, so the following tools will prompt you for your password:
 ```
@@ -21,7 +21,7 @@ export PATH="/path/to/folder":$PATH
 
 Note that this library depends on the following Linux tools
 ```
-du df mkfs truncate losetup mount findmnt resize2fs fuser
+du df mkfs truncate losetup mount findmnt fuser
 ```
 which are part of the following Linux packages
 ```
@@ -40,19 +40,15 @@ cd /tmp/foo
 
 # create new VHD of 50M, and format it as NTFS
 vhd-create test.vhd 50M
-sudo vhd-format test.vhd ntfs
+vhd-format test.vhd ntfs
 
 # mount it and create a file in it
-sudo vhd-mount test.vhd test/
+vhd-mount test.vhd test/
 echo "Hello World!" >> test/example
 
-# unmount and resize
-sudo vhd-umount test.vhd
-vhd-resize test.vhd 60M
-
-# remount and show info
-sudo vhd-mount test.vhd
+# show info and unmount
 vhd-info test.vhd
+vhd-umount test.vhd
 ```
 
 #### Create an empty VHD
@@ -110,21 +106,6 @@ vhd-mount  <filepath> <folder> <options...>
     All subsequent arguments as forwarded to the command 'mount'.
 ```
 
-#### Resize a formatted VHDs
-
-Existing VHDs that have previously been formatted can be resized.
-Although some file-systems allow resizing without unmount, we avoid complications by requiring the VHD to be unmounted for resize.
-
-```
-vhd-resize <filepath> <size>
-
-    <filepath>
-    Absolute or relative path to a VHD file formatted with 'vhd-format'.
-
-    <size>
-    New size in bytes, supporting human-readable formats (eg `10M` or `1.2G`).
-```
-
 #### Information about a mounted VHD
 
 This command provides information about storage space, mounting options, and active processes using the attached device.
@@ -135,17 +116,6 @@ vhd-info <filepath>
     <filepath>
     Absolute or relative path to a VHD file mounted with 'vhd-mount'.
 ```
-
-#### Determine which loop-device is attached
-
-Mounted VHDs are attached to a loop-device, which is mounted to a folder.
-In order to determine which loop-device is attached to a specific VHD, you can use the command:
-```
-vhd-loopdev <filepath>
-```
-which will return the device name (eg `/dev/loop1`), or nothing if the VHD is not attached.
-
-You can also get more information about mounting using `vhd-info`.
 
 ## License
 
