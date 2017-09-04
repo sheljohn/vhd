@@ -6,6 +6,8 @@ if [ $EUID != 0 ]; then
     sudo "$0" "$@"
     exit $?
 fi
+[ -f "$1" ] || { echo "File not found: $1"; exit 1; }
+[ -d "$2" ] || { echo "Folder not found: $2"; exit 1; }
 
 # consume args
 FILE=$1

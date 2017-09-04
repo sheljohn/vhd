@@ -6,6 +6,7 @@ if [ $EUID != 0 ]; then
     sudo "$0" "$@"
     exit $?
 fi
+[ -f "$1" ] || { echo "File not found: $1"; exit 1; }
 
 # unmount and detach loop-device
 LOOPDEV=$(losetup -j "$1" | awk -F: '{print $1}')

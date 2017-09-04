@@ -6,6 +6,7 @@ if [ $EUID != 0 ]; then
     sudo "$0" "$@"
     exit $?
 fi
+[ -f "$1" ] || { echo "File not found: $1"; exit 1; }
 [ $# -lt 2 ] && FMT=ntfs || FMT=$2
 
 # find available loop device and bind it to the VHD

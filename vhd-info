@@ -1,6 +1,7 @@
 #!/bin/bash
 
 [ $# -lt 1 ] && { echo "Usage: $0 <file.vhd>"; exit 1; }
+[ -f "$1" ] || { echo "File not found: $1"; exit 1; }
 
 # determine attached loop-device
 LOOPDEV=$(losetup -j "$1" | awk -F: '{print $1}')

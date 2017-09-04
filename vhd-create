@@ -1,6 +1,7 @@
 #!/bin/bash
 
 [ $# -lt 2 ] && { echo "Usage: $0 <file.vhd> <size>"; exit 1; }
+[ -f "$1" ] && { echo "File already exists: $1"; exit 1; }
 
 #dd if=/dev/zero of="$1" bs=1M count=$2
 
