@@ -12,7 +12,7 @@ fi
 # find available loop device and bind it to the VHD
 LOOPDEV=$(losetup -f)
 echo "VHD will be attached temporarily to loop-device: $LOOPDEV"
-losetup $LOOPDEV ./test.vhd
+losetup $LOOPDEV "$1"
 
 # format device
 mkfs -t $FMT $LOOPDEV 
