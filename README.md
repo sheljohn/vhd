@@ -14,7 +14,7 @@ Note that this has nothing to do with the read/write permissions of the mounted 
 
 ## Installation
 
-There is no specific installation require, simply add the folder to your `PATH`, by adding the following line to your `.bash_profile`:
+There is no specific installation required, simply add the folder to your `PATH`, by adding the following line to your `.bash_profile`:
 ```
 export PATH="/path/to/folder":$PATH
 ```

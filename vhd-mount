@@ -14,7 +14,7 @@ shift 2
 
 # attach to loop device
 LOOPDEV=$(losetup -j "$1" | awk -F: '{print $1}')
-if [ -z $LOOPDEV ]; then
+if [ -n $LOOPDEV ]; then
     LOOPDEV=$(losetup -f)
     losetup $LOOPDEV "$FILE"
 fi
