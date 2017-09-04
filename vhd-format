@@ -2,7 +2,7 @@
 
 [ $# -lt 1 ] && { echo "Usage: sudo $0 <file.vhd> <format=ntfs>"; exit 1; }
 if [ $EUID != 0 ]; then
-    echo "This script requires root privileges, you may be prompted for your password: "
+    echo "This script requires root privileges."
     sudo "$0" "$@"
     exit $?
 fi
